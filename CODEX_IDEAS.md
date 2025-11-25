@@ -15,6 +15,7 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 - **Exam Drill Agent** — Generates practice Q&A, timing hints, tracks weak spots per course/context.
 - **R/Statistics QA Agent** — Lints R/Rmd; checks model assumptions (heteroskedasticity, multicollinearity), suggests White/BP/VIF, quick tables/plots.
 - **Negotiation Strategy Agent** — Maps parties/interests (BATNA/WATNA/ZOPA); outputs simulation scripts and tactical prompts.
+- **PDF-to-Markdown Slides Converter** — Turns PDF decks into Hebrew Markdown notes with slide order preserved, headings/bullets normalized, and tables/links extracted.
 
 ## Tools & Skills Proposed (all from this chat)
 - **Conceptual Scaffolding Builder** — Extracts headings/relations/terms into 3-level TOC + concept links before summarizing.
@@ -28,6 +29,7 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 - **Parallel Reading Compressor** — Contrast tables across sources (claims/evidence/gaps); ideal for research compare.
 - **Cognitive Circuit Breaker** — Overwhelm detector; returns to goal + 3 executable steps (“תכלס”); crisis mode.
 - **Retrieval Cache ↔ Scaffolding Bridge** — On adding a doc, auto-generate scaffolding and record link in index.
+- **PDF Deck Parser** — Extracts slide titles, bullets, tables, and links from PDFs; emits structured Markdown with RTL-friendly bullets.
 
 ## Brain Dump Agent — Detailed Plan
 - **Goal**: Zero-friction capture; end-of-session coherence. Everything in Markdown (one file per session under `brain_dumps/`).
@@ -85,6 +87,31 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 - **CLI-first**: Use Typer/Click commands; keep offline-friendly; avoid network.
 - **Adapters**: Minimal wrappers so Claude Code/Gemini CLI can call the same template engine; Codex CLI runs local scripts.
 - **Credit**: Include “Created by Codex (GPT-5) for ai-academic-workflow; interoperable with Claude Code and Gemini CLI” in generated docs/templates.
+
+## PDF Slides → Hebrew Markdown — Detailed Plan
+- **Goal**: Convert PDF מצגות לטקסט Markdown בעברית, עם סדר שקפים, כותרות, bullets, טבלאות וקישורים, בצורה נקייה וקריאה.
+- **Input**: PDF deck; optional flags: `--lang he`, `--mode outline|full`, `--keep-images` (placeholders), `--out docs/slides/<name>.md`.
+- **Parsing Steps**:
+  - Extract text per page; detect top-line title (font size/position) → `# Slide <n>: <title>`.
+  - Normalize bullets to `- ...`; infer nesting by indentation/marker symbols; maintain RTL-friendly order.
+  - Tables: detect grid text → emit Markdown table; אם לא בטוח, fallback לבולטים עם כותרות.
+  - Links: preserve URLs; images: insert `![image-slide-n](path-or-placeholder)` if `--keep-images`.
+  - Cleanup: strip page numbers/footers; dedupe repeated headers.
+- **Output Shape (Markdown)**:
+  ```
+  # Slide 3: Regression Diagnostics
+  - White test → בדיקת heteroskedasticity
+  - אם p-value < 0.05 → שקול robust SE
+
+  | Metric | Value | Note |
+  | --- | --- | --- |
+  | VIF | 4.2 | multicollinearity חשודה |
+  ```
+- **CLI**: `slides2md convert deck.pdf --lang he --mode full --out docs/slides/2025-02-econometrics.md`.
+- **Integration**:
+  - Add to Retrieval Cache on success (`type=slides`, `course=...`, tags from filename).
+  - Optionally auto-run Conceptual Scaffolding on the resulting Markdown for TOC/concept map.
+  - Feeds Private Prompter (learn-deep) and Brain Dump Agent for annotations.
 
 ## Suggested Next Steps (build order)
 1) Brain Dump Agent MVP: `brain new/jot/organize` + Markdown parser; save under `brain_dumps/`.
