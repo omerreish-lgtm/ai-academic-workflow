@@ -116,31 +116,17 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
   - Feeds Private Prompter (learn-deep) and Brain Dump Agent for annotations.
 
 ## Terminology Interpreter / Living Glossary — Detailed Plan
-- **Goal**: Translate personal terms/shortcuts (e.g., “סכמה”) into explicit, context-aware instructions for AI agents, so outputs match the user’s intended format and depth.
+- **Goal**: (Idea only, not implemented) Translate personal terms/shortcuts (e.g., “סכמה”) into explicit, context-aware instructions for AI agents so outputs match the user’s intended format and depth.
 - **Input Signals**: Chat text/prompt, detected keywords/phrases, optional course/topic tags, mode (learn/research/code/crisis).
-- **Glossary Store**: Embedded table (below) inside `CODEX_IDEAS.md`, human-edited, slow-changing.
-- **Runtime Behavior**:
+- **Possible Store**: Human-edited Markdown table (future) with columns: `term | meaning | output shape | context/tags | example prompt`. Not yet created.
+- **Runtime Concept**:
   - Detect glossary term in incoming text.
-  - Resolve to definition filtered by context/mode (e.g., “סכמה” in law → IRAC outline with bullets; in econ → TOC + key formulas).
-  - Inject a short instruction block to the downstream agent (Claude Code, Codex CLI, Gemini CLI) describing expected output, format, and scope.
-  - If ambiguity: return a clarifying question (Probe.One) before proceeding.
-- **CLI Hooks**: `glossary lookup <term> [--context ...]`, `glossary add/edit` (manual), `glossary explain "<prompt>"` → shows how terms will be interpreted.
-- **Integration**:
-  - Private Prompter: pre-appends resolved definitions to prompts.
-  - Brain Dump Agent: can tag dumps with terms and later expand them on organize.
-  - Retrieval Cache: index glossary entries with tags for discoverability.
-
-### Embedded Living Glossary (HE/EN)
-| term (orig) | meaning (plain) | expected output shape | context/tags | example prompt |
-| --- | --- | --- | --- | --- |
-| סכמה | Outline/structure (not free-form summary); show hierarchy and key links. | Markdown headings (≤3 levels) + bullets; short notes per node; concise. | law, econ, notes | "תייצר לי סכמה לחומר של שיעור 5 בדיני עבודה" |
-| תכלס | Cut to essentials; minimal words, actionable steps. | 3–5 bullets/steps; 1 line each; include command/next action. | crisis, tasks | "תכלס מה צריך כדי לסיים את המטלה" |
-| Probe.One | Ask only one clarifying question at a time if needed. | Single clarifying question, then wait. | meta, dialog | "Probe.One: מה חסר כדי להתחיל?" |
-
-Guidelines:
-- Keep bilingual phrasing when helpful; be explicit about output shape and brevity.
-- If a term varies by mode (law/econ/code), note it in `context/tags` and adjust shape per mode.
-- Update table slowly as patterns emerge; agents should consult this section before expanding prompts.
+  - Resolve meaning by context/mode; inject a short instruction block to downstream agents (Claude Code, Codex CLI, Gemini CLI) describing expected output/format/scope.
+  - If ambiguous: ask a single clarifying question (Probe.One) before proceeding.
+- **Integration Concept**:
+  - Private Prompter could pre-append resolved definitions to prompts.
+  - Brain Dump Agent could tag dumps with terms and expand them on organize.
+  - Retrieval Cache could index glossary entries for discovery.
 
 ## Suggested Next Steps (build order)
 1) Brain Dump Agent MVP: `brain new/jot/organize` + Markdown parser; save under `brain_dumps/`.

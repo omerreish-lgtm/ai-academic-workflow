@@ -29,6 +29,5 @@ Created by Codex (GPT-5) to track planned agents/tools/skills. Update status as 
 ## Artifacts to Maintain
 - [ ] `brain_dumps/` session files (raw + organized)
 - [ ] `docs/scaffolding/` outputs (scaffolds/TOCs)
-- [ ] Embedded glossary table inside `CODEX_IDEAS.md` (living glossary)
 - [ ] Prompt templates (Private Prompter) per mode/platform
 - [ ] CLI entrypoints (Typer/Click) for agents/tools
