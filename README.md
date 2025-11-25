@@ -67,9 +67,25 @@ Pattern Recognition       | Manual    | Automated     | 10x ↑
 
 ## 📄 Key Documents
 
-- **[AI-Academic-Workflow-Design.md](./AI-Academic-Workflow-Design.md)** - Complete design specification (60+ pages)
-- **[user_context.md](./user_context.md)** - Cognitive profile and interaction guidelines
-- **[CLAUDE.md](./CLAUDE.md)** - Claude Code configuration
+- **[ai-academic-workflow-design.md](docs/design/ai-academic-workflow-design.md)** - Complete design specification (60+ pages)
+- **[user-context.md](docs/context/user-context.md)** - Cognitive profile and interaction guidelines
+- **[claude.md](docs/prompts/claude.md)** - Claude Code configuration
+- **[prompt-for-gemini.md](docs/prompts/prompt-for-gemini.md)** - Gemini prompt persona
+- **[codex-ideas.md](docs/ideas/codex-ideas.md)** - Central ideas/blueprints (agents, tools, skills)
+- **[implementation-checklist.md](docs/checklists/implementation-checklist.md)** - High-level build checklist
+- **[ai-workflow-proposal-detailed.md](docs/proposals/ai-workflow-proposal-detailed.md)** - Detailed workflow proposal (Gemini under Claude Code persona)
+
+## 📂 Repository Structure
+```
+docs/
+  design/                 # Architecture and design specs
+  proposals/              # Detailed proposals and long-form plans
+  ideas/                  # Blueprints for agents/tools/skills
+  checklists/             # Implementation checklists
+  prompts/                # Prompt/persona configs (Claude, Gemini)
+  context/                # user_context and related profiles
+README.md
+```
 
 ## 🚀 Quick Start
 
