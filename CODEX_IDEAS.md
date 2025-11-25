@@ -118,7 +118,7 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 ## Terminology Interpreter / Living Glossary — Detailed Plan
 - **Goal**: Translate personal terms/shortcuts (e.g., “סכמה”) into explicit, context-aware instructions for AI agents, so outputs match the user’s intended format and depth.
 - **Input Signals**: Chat text/prompt, detected keywords/phrases, optional course/topic tags, mode (learn/research/code/crisis).
-- **Glossary Store**: Markdown table (`TERMINOLOGY_GLOSSARY.md`) with columns: `term | meaning | output shape | context/tags | example prompt`. Slow-changing, human-editable.
+- **Glossary Store**: Embedded table (below) inside `CODEX_IDEAS.md`, human-edited, slow-changing.
 - **Runtime Behavior**:
   - Detect glossary term in incoming text.
   - Resolve to definition filtered by context/mode (e.g., “סכמה” in law → IRAC outline with bullets; in econ → TOC + key formulas).
@@ -129,6 +129,18 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
   - Private Prompter: pre-appends resolved definitions to prompts.
   - Brain Dump Agent: can tag dumps with terms and later expand them on organize.
   - Retrieval Cache: index glossary entries with tags for discoverability.
+
+### Embedded Living Glossary (HE/EN)
+| term (orig) | meaning (plain) | expected output shape | context/tags | example prompt |
+| --- | --- | --- | --- | --- |
+| סכמה | Outline/structure (not free-form summary); show hierarchy and key links. | Markdown headings (≤3 levels) + bullets; short notes per node; concise. | law, econ, notes | "תייצר לי סכמה לחומר של שיעור 5 בדיני עבודה" |
+| תכלס | Cut to essentials; minimal words, actionable steps. | 3–5 bullets/steps; 1 line each; include command/next action. | crisis, tasks | "תכלס מה צריך כדי לסיים את המטלה" |
+| Probe.One | Ask only one clarifying question at a time if needed. | Single clarifying question, then wait. | meta, dialog | "Probe.One: מה חסר כדי להתחיל?" |
+
+Guidelines:
+- Keep bilingual phrasing when helpful; be explicit about output shape and brevity.
+- If a term varies by mode (law/econ/code), note it in `context/tags` and adjust shape per mode.
+- Update table slowly as patterns emerge; agents should consult this section before expanding prompts.
 
 ## Suggested Next Steps (build order)
 1) Brain Dump Agent MVP: `brain new/jot/organize` + Markdown parser; save under `brain_dumps/`.
