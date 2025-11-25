@@ -69,9 +69,9 @@ Pattern Recognition       | Manual    | Automated     | 10x ↑
 
 - **[ai-academic-workflow-design.md](docs/design/ai-academic-workflow-design.md)** - Complete design specification (60+ pages)
 - **[user-context.md](docs/context/user-context.md)** - Cognitive profile and interaction guidelines
-- **[claude.md](docs/prompts/claude.md)** - Claude Code configuration
-- **[prompt-for-gemini.md](docs/prompts/prompt-for-gemini.md)** - Gemini prompt persona
-- **[codex-ideas.md](docs/ideas/codex-ideas.md)** - Central ideas/blueprints (agents, tools, skills)
+- **[claude-ideas.md](docs/ideas/claude-ideas.md)** - Claude Code ideas/persona
+- **[gemini-ideas.md](docs/ideas/gemini-ideas.md)** - Gemini ideas/persona
+- **[codex-ideas.md](docs/ideas/codex-ideas.md)** - Codex ideas/blueprints (agents, tools, skills)
 - **[implementation-checklist.md](docs/checklists/implementation-checklist.md)** - High-level build checklist
 - **[ai-workflow-proposal-detailed.md](docs/proposals/ai-workflow-proposal-detailed.md)** - Detailed workflow proposal (Gemini under Claude Code persona)
 
@@ -80,9 +80,8 @@ Pattern Recognition       | Manual    | Automated     | 10x ↑
 docs/
   design/                 # Architecture and design specs
   proposals/              # Detailed proposals and long-form plans
-  ideas/                  # Blueprints for agents/tools/skills
+  ideas/                  # Blueprints and personas (Claude, Gemini, Codex)
   checklists/             # Implementation checklists
-  prompts/                # Prompt/persona configs (Claude, Gemini)
   context/                # user_context and related profiles
 README.md
 ```
