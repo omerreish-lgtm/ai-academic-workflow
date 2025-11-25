@@ -1,0 +1,1 @@
+# Gemini CLI Test\n\nThis file was created by Gemini CLI using the workaround tool.
