@@ -17,6 +17,7 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 - **Negotiation Strategy Agent** — Maps parties/interests (BATNA/WATNA/ZOPA); outputs simulation scripts and tactical prompts.
 - **PDF-to-Markdown Slides Converter** — Turns PDF decks into Hebrew Markdown notes with slide order preserved, headings/bullets normalized, and tables/links extracted.
 - **Terminology Interpreter / Living Glossary Agent** — Detects user-specific terms in chat (e.g., “סכמה”) and injects clear, context-aware definitions/instructions so AI tools respond per the user’s intended meaning.
+- **Conversation Summarizer** — End-of-session summarizer producing structured Markdown with context, friction points, terminology, outputs, and key takeaways. (Idea only)
 
 ## Tools & Skills Proposed (all from this chat)
 - **Conceptual Scaffolding Builder** — Extracts headings/relations/terms into 3-level TOC + concept links before summarizing.
@@ -32,6 +33,7 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 - **Retrieval Cache ↔ Scaffolding Bridge** — On adding a doc, auto-generate scaffolding and record link in index.
 - **PDF Deck Parser** — Extracts slide titles, bullets, tables, and links from PDFs; emits structured Markdown with RTL-friendly bullets.
 - **Terminology Mapper** — Matches terms to context-aware meanings/output shapes; maintains a living glossary table that downstream agents can consume.
+- **Conversation Summarizer skill** — Structured summary generator; can emit Markdown + compact JSON for downstream agents. (Idea only)
 
 ## Brain Dump Agent — Detailed Plan
 - **Goal**: Zero-friction capture; end-of-session coherence. Everything in Markdown (one file per session under `brain_dumps/`).
@@ -128,6 +130,37 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
   - Brain Dump Agent could tag dumps with terms and expand them on organize.
   - Retrieval Cache could index glossary entries for discovery.
 
+## Conversation Summarizer — Idea Blueprint (refined)
+- **Goal**: Structured end-of-session summary (idea only) capturing what was discussed, how, friction points, terminology, outputs, takeaways, and recommended knowledge to feed agents.
+- **Trigger**: Manual/CLI call (e.g., `conv-summarize --source transcript.md --project ...`).
+- **Inputs**: Transcript/log; optional metadata (project, files touched, start/end time, initial prompt).
+- **Core Output (Markdown, concise 10–12 sections)**:
+  1) Goal  
+  2) Mode & Management Style (iterative/linear/investigative/flow)  
+  3) Time (start–end)  
+  4) Initial Prompt  
+  5) User Guidance / Constraints (tuning, style, limits)  
+  6) Decisions & Plans (Decision Log)  
+  7) Outputs (files/paths/commands)  
+  8) Friction: what/why (unclear prompt, agent miss, changing scope); hotspots noted  
+  9) Risk & Dependencies (info gaps, external deps, permissions)  
+  10) Key Takeaways  
+  11) Terminology (user terms → meaning guess/expansion)  
+  12) Lessons & Next Steps  
+  13) Recommendations to agent knowledge (what to store as learned context)  
+  14) Action Items (follow-ups tied to the session goal)
+- **Iteration Tracking**: Capture pivot points (what changed, why: misunderstanding vs. prompt clarity vs. new constraints).
+- **Confidence**: Optional quick rating of completeness/clarity; flag open questions.
+- **Tagging/Structure**: Markdown sections plus optional compact JSON for downstream agents:  
+  `{
+    goal, mode, time, decisions[], outputs[], friction[], risks[],
+    terminology[], lessons[], next_steps[], knowledge_recs[], action_items[],
+    confidence
+  }`
+- **Integration (concept)**:
+  - Auto-detect files touched via git status for outputs.
+  - Consult future glossary (if built) to expand terms in Terminology.
+  - Identify friction hotspots by message clusters/time; label cause category.
 ## Suggested Next Steps (build order)
 1) Brain Dump Agent MVP: `brain new/jot/organize` + Markdown parser; save under `brain_dumps/`.
 2) Retrieval Cache: SQLite + `cache add/search/export`; optional bridge to scaffold.
