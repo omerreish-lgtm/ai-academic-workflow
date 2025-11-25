@@ -16,6 +16,7 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 - **R/Statistics QA Agent** — Lints R/Rmd; checks model assumptions (heteroskedasticity, multicollinearity), suggests White/BP/VIF, quick tables/plots.
 - **Negotiation Strategy Agent** — Maps parties/interests (BATNA/WATNA/ZOPA); outputs simulation scripts and tactical prompts.
 - **PDF-to-Markdown Slides Converter** — Turns PDF decks into Hebrew Markdown notes with slide order preserved, headings/bullets normalized, and tables/links extracted.
+- **Terminology Interpreter / Living Glossary Agent** — Detects user-specific terms in chat (e.g., “סכמה”) and injects clear, context-aware definitions/instructions so AI tools respond per the user’s intended meaning.
 
 ## Tools & Skills Proposed (all from this chat)
 - **Conceptual Scaffolding Builder** — Extracts headings/relations/terms into 3-level TOC + concept links before summarizing.
@@ -30,6 +31,7 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
 - **Cognitive Circuit Breaker** — Overwhelm detector; returns to goal + 3 executable steps (“תכלס”); crisis mode.
 - **Retrieval Cache ↔ Scaffolding Bridge** — On adding a doc, auto-generate scaffolding and record link in index.
 - **PDF Deck Parser** — Extracts slide titles, bullets, tables, and links from PDFs; emits structured Markdown with RTL-friendly bullets.
+- **Terminology Mapper** — Matches terms to context-aware meanings/output shapes; maintains a living glossary table that downstream agents can consume.
 
 ## Brain Dump Agent — Detailed Plan
 - **Goal**: Zero-friction capture; end-of-session coherence. Everything in Markdown (one file per session under `brain_dumps/`).
@@ -112,6 +114,21 @@ Created by **Codex (GPT-5)** via Codex CLI. This file captures every idea from o
   - Add to Retrieval Cache on success (`type=slides`, `course=...`, tags from filename).
   - Optionally auto-run Conceptual Scaffolding on the resulting Markdown for TOC/concept map.
   - Feeds Private Prompter (learn-deep) and Brain Dump Agent for annotations.
+
+## Terminology Interpreter / Living Glossary — Detailed Plan
+- **Goal**: Translate personal terms/shortcuts (e.g., “סכמה”) into explicit, context-aware instructions for AI agents, so outputs match the user’s intended format and depth.
+- **Input Signals**: Chat text/prompt, detected keywords/phrases, optional course/topic tags, mode (learn/research/code/crisis).
+- **Glossary Store**: Markdown table (`TERMINOLOGY_GLOSSARY.md`) with columns: `term | meaning | output shape | context/tags | example prompt`. Slow-changing, human-editable.
+- **Runtime Behavior**:
+  - Detect glossary term in incoming text.
+  - Resolve to definition filtered by context/mode (e.g., “סכמה” in law → IRAC outline with bullets; in econ → TOC + key formulas).
+  - Inject a short instruction block to the downstream agent (Claude Code, Codex CLI, Gemini CLI) describing expected output, format, and scope.
+  - If ambiguity: return a clarifying question (Probe.One) before proceeding.
+- **CLI Hooks**: `glossary lookup <term> [--context ...]`, `glossary add/edit` (manual), `glossary explain "<prompt>"` → shows how terms will be interpreted.
+- **Integration**:
+  - Private Prompter: pre-appends resolved definitions to prompts.
+  - Brain Dump Agent: can tag dumps with terms and later expand them on organize.
+  - Retrieval Cache: index glossary entries with tags for discoverability.
 
 ## Suggested Next Steps (build order)
 1) Brain Dump Agent MVP: `brain new/jot/organize` + Markdown parser; save under `brain_dumps/`.
